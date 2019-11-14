@@ -1,0 +1,59 @@
+﻿/*Chat CSS*/
+#chat_widnow {
+    width: 200px;
+    border: solid 1px #6c0e4a;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    overflow-x: hidden;
+    box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.7) !important;
+}
+
+#chat_title_bar {
+    background: #FEFEFE;
+    height: 25px;
+    width: 100%;
+}
+
+#chat_min_button {
+    width: 25px;
+    height: 23px;
+    float: right;
+    cursor: pointer;
+}
+
+#chat_box {
+    height: 250px;
+    background: #DFDFDF;
+}
+    /*Chat End*/
+
+
+
+
+    #chat_box .bg-success {
+        display: block;
+        padding: 8px 15px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    #chat_box .bg-info {
+        display: block;
+        padding: 8px 15px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+.ui-chatbox .ui-widget-header {
+    color: #222222;
+    font-weight: 400;
+}
+
+.ui-chatbox-input {
+    border: 0 !important;
+}
+
+.ui-chatbox-input-box {
+    width: 189px !important;
+}

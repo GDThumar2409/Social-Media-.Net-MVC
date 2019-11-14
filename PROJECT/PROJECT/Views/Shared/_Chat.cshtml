@@ -1,0 +1,33 @@
+﻿@section scripts{
+    <script src="~/Scripts/jquery.ui.chatbox.js"></script>
+    <script src="~/Scripts/chatboxManager.min.js"></script>
+}
+
+@using PROJECT.Models
+@section style{
+    <link href="~/Content/Chat.css" rel="stylesheet" />
+    <link href="~/Content/jquery.ui.chatbox.css" rel="stylesheet" />
+}
+@{
+    ApplicationUser user = Session["User"] as ApplicationUser;
+}
+<div id="chat_widnow">
+    <div id="chat_title_bar">
+        <span class="col-sm-9 text-primary"><strong>Online Users</strong></span>
+        <div id="chat_min_button"><i class="fa fa-plus-square"></i></div>
+    </div>
+    <div id="chat_box" style="display: none;overflow-y:auto;">
+    </div>
+</div>
+<div id="chat_div"></div>
+<input id="hdId" type="hidden" />
+<input id="hdUserName" type="hidden" />
+<!--<input type="hidden" ID="hdnCurrentUserName" />
+<input type="hidden" ID="hdnCurrentUserID" /> -->
+@if (Session["User"] != null)
+{
+    @Html.Hidden("hdnCurrentUserName", @user.UserName)
+    @Html.Hidden("hdnCurrentUserID", @user.Id)
+}
+
+

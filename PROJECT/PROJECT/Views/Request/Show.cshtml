@@ -1,0 +1,99 @@
+﻿@using PROJECT.Models
+@{
+    ViewBag.Title = "Show";
+    List<ApplicationUser> users = ViewBag.users;
+}
+
+<h2>Show</h2>
+
+@if (users != null)
+{
+    foreach (var user in users)
+    {
+        <div class="container">
+            <div class="card mx-auto" style="width:400px">
+                <img class="card-img-top" src="~/Request/File/?id=@user.Id" alt="Card image" style="width:100%">
+                <div class="card-body">
+                    <h4 class="card-title">@user.UserName</h4>
+                    <p class="card-text">@user.Bio</p>
+
+
+                    @Html.Hidden("UserID", @user.Id)
+                    <button type="submit" class="btn btn-success" onclick="accept()">Accept</button>
+                    <button type="submit" class="btn btn-danger" onclick="decline()">Decline</button>
+
+                </div>
+            </div>
+        </div>
+    }
+
+}
+
+@section scripts{
+    <script src="~/Scripts/notify.js"></script>
+    <script>
+        function accept() {
+            debugger;
+            var UserID = $("#UserID").val();
+            $.ajax
+                ({
+                    url: '/Request/Accept',
+                    type: 'POST',
+                    datatype: "json",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        UserID: UserID
+                    }),
+                    //data: {
+                    //     state : stateId
+                    //  },
+
+                    success: function (data) {
+                        $(".btn-success").notify("Request Accepted", "success");
+                        var chatHub = $.connection.chatHub;
+                        registerClientMethods(chatHub);
+                        // Start Hub
+                        $.connection.hub.start().done(function () {
+                            registerEvents(chatHub);
+                        });
+                        setTimeout(function () {
+                            window.location.href = data;
+                        },3000)
+                    },
+                    error: function () {
+                        alert("Whooaaa! Something went wrong..")
+                    },
+                });
+        }
+        </script>
+        <script>
+        function decline() {
+            debugger;
+            var UserID = $("#UserID").val();
+            $.ajax
+                ({
+                    url: '/Request/Decline',
+                    type: 'POST',
+                    datatype: "json",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        UserID: UserID
+                    }),
+                    //data: {
+                    //     state : stateId
+                    //  },
+
+                    success: function (data) {
+                        $(".btn-danger").notify("Request Declined", "success");
+                        setTimeout(function () {
+                            window.location.href = data;
+                        }, 3000)
+                    },
+                    error: function () {
+                        alert("Whooaaa! Something went wrong..")
+                    },
+                });
+        }
+    </script>
+}
+
