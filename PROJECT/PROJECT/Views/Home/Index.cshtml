@@ -3,9 +3,9 @@
     ViewBag.Title = "Home Page";
     var friends = ViewBag.Friends;
     var posts = ViewBag.posts;
+    var count = ViewBag.counts;
     var user = Session["User"] as ApplicationUser;
     var username = user.UserName;
-    var reqcount = ViewBag.reqcount;
 }
 
 @section style{
@@ -111,23 +111,58 @@
             max-height: 300px;
             overflow-y: auto;
         }
+
+        .chip {
+            display: inline-block;
+            padding: 0 25px;
+            height: 50px;
+            font-size: 14px;
+            line-height: 50px;
+            border-radius: 25px;
+            background-color: #f1f1f1;
+            width: 200px;
+        }
+
+            .chip img {
+                float: left;
+                margin: 0 10px 0 -25px;
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+            }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        h1 {
+            color: green;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 }
 
 
 
-
-
-<div class="container-fluid gedf-wrapper">
+<div class="container-fluid gedf-wrapper" style="margin-bottom:150px">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4" style="position:fixed;left:50px">
             <div class="card">
                 <div class="card-body">
                     <!--<i class="fa fa-bell"  class="badge1" data-badge="27" style="float:right " aria-hidden="true"></i>-->
                     <div id="ex4" style="float:right ">
-                        <span class="p1 fa-stack fa-2x has-badge" data-count="@reqcount">
+                        <span class="p1 fa-stack fa-2x has-badge" data-count="5">
                             <!--<i class="p2 fa fa-circle fa-stack-2x"></i>-->
-                            <i class="p3 fas fa-user fa-stack-1x xfa-inverse" data-count="4b"></i>
+                           <a href="~/Request/show" style="color:black"> <i class="p3 fas fa-user fa-stack-1x xfa-inverse" data-count="4b"></i></a>
                         </span>
                     </div>
 
@@ -138,11 +173,11 @@
                         </span>
                     </div>
                     <div class="mr-2">
-                        <img class="rounded-circle" width="45" hight="45" src="https://picsum.photos/50/50" alt="" style="float:left ;margin-right:10px">
+                        <img class="rounded-circle" width="45" hight="45" src="/Home/File/?id=@user.DpId" alt="" style="float:left ;margin-right:10px">
                     </div>
                     <div class="ml-2" style="margin-left:2px">
-                        <div class="h5 m-0"><a href="#">@@krinish291</a></div>
-                        <div class="h7 text-muted">Radadiya Krinish</div>
+                        <div class="h5 m-0"><a href="~/Profile/index/?id=@user.Id">@@@user.NickName</a></div>
+                        <div class="h7 text-muted">@user.UserName</div>
                     </div>
 
 
@@ -166,13 +201,13 @@
                     </li>
                     <li class="list-group-item">
                         <div class="h6 text-muted">Following</div>
-                        <div class="h5">6758</div>
+                        <div class="h5">@count</div>
                     </li>
                     <li class="list-group-item">Vestibulum at eros</li>
                 </ul>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5" style="margin-left:385px">
 
             <!--- \\\\\\\MAKE POST-->
             @using (Html.BeginForm("Post", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
@@ -196,15 +231,15 @@
                             <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                                 <div class="form-group">
                                     <label class="sr-only" for="message">post</label>
-                                    <input class="form-control" id="Location" rows="3" placeholder="Eenter your Location" name="location" required /><br />
-                                    <textarea class="form-control" id="message" rows="3" placeholder="What are you thinking?" name="description" required></textarea>
+                                    <input class="form-control shadow p-2 mb-4 bg-white" id="Location" rows="3" placeholder="Eenter your Location" name="location" required /><br />
+                                    <textarea class="form-control shadow p-2 mb-4 bg-white" id="message" rows="3" placeholder="What are you thinking?" name="description" required></textarea>
                                 </div>
 
                             </div>
                             <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                                 <div class="form-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile" name="upload">
+                                        <input type="file" class="custom-file-input shadow p-2 mb-4 bg-white" id="customFile" name="upload">
                                         <label class="custom-file-label" for="customFile" required>Upload image</label>
                                     </div>
                                 </div>
@@ -240,10 +275,10 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="mr-2">
-                                    <img class="rounded-circle" width="45" hight="45" src="p1.jpg" alt="">
+                                    <img class="rounded-circle" width="45" hight="45" src="/Home/File/?id=@post.User.DpId" alt="">
                                 </div>
                                 <div class="ml-2">
-                                    <div class="h5 m-0"><a href="#">@@ @post.User.UserName</a></div>
+                                    <div class="h5 m-0"><a href="#">@@@post.User.UserName</a></div>
                                     <div class="h7 text-muted">@post.User.NickName</div>
                                 </div>
                             </div>
@@ -321,47 +356,154 @@
 
 
         </div>
-        <div class="col-md-3">
-            <div class="card gedf-card">
+        <!--<div class="col-md-3"  style="position:fixed;right:50px">
+    <div class="card gedf-card">
+        <div class="card-body  scroll">
+            <h5 class="card-title" style="position:sticky">Friends List </h5>
+            <hr>
+            <h6 class="card-subtitle mb-2 text-muted"></h6>
+            @if (friends != null)
+            {
+                foreach (var friend in friends)
+                {
+                    <div class="mr-2">
+                        <img class="rounded-circle" width="30" src="https://picsum.photos/50/50" alt="" style="float:left ;margin-right:10px">
+                    </div>
+                    <div class="ml-2" style="margin-left:2px">
+                        <div class="h5 m-0"><a href="/Home/Profile/id?@friend.Id">@@ @friend.UserName</a></div>
+
+                    </div>
+                    <br />
+                }
+
+            }
+
+
+
+
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>-->
+        <div class="col-md-3" style="position:fixed;right:50px">
+            <div class="card gedf-card" style="padding-bottom:20px">
                 <div class="card-body  scroll">
-                    <h5 class="card-title" style="position:sticky">Friends List </h5>
+                    <a href="~/Request/index" style="float:right;color:darkslategray"><i class="fas fa-plus"></i> Friends</a>
+                    <h5 class="card-title position-static">Friends List </h5>
+
                     <hr>
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
-                    @if (friends != null)
-                    {
-                        foreach (var friend in friends)
-                        {
-                            <div class="mr-2">
-                                <img class="rounded-circle" width="30" src="https://picsum.photos/50/50" alt="" style="float:left ;margin-right:10px">
-                            </div>
-                            <div class="ml-2" style="margin-left:2px">
-                                <div class="h5 m-0"><a href="/Home/Profile/id?@friend.Id">@@ @friend.UserName</a></div>
+                    <input id="myInput" type="text" placeholder="Search..">
+                    <hr>
+                    <!-- <table>
+        <tbody id="geeks">
+            <tr>
+                <div class="chip" style="margin-bottom:10px">
+                    <img src="~/Content/src/p2.jpg" alt="Person" width="96" height="96">
+                    Radadiya krinish
 
-                            </div>
-                            <br />
-                        }
+                </div>
+            </tr>
 
-                    }
+            <br />
+            <tr>
+                <div class="chip" style="margin-bottom:10px">
+                    <img src="~/Content/src/p1.jpg" alt="Person" width="96" height="96">
+                    John Doe
+
+                </div>
+            </tr>
+
+            <br />
+            <tr>
+                <div class="chip" style="margin-bottom:10px">
+                    <img src="~/Content/src/images.jpg" alt="Person" width="96" height="96">
+                    Radadiya krinish
+
+                </div>
+            </tr>
+
+            <br />
+            <tr>
+                <div class="chip" style="margin-bottom:10px">
+                    <img src="~/Content/src/p2.jpg" alt="Person" width="96" height="96">
+                    John Doe
+
+                </div>
+            </tr>
+
+            <br />
+
+        </tbody>
+    </table>-->
+
+
+                    <table border=0 class="table" id="PackTab">
+
+                        <tbody id="myTable">
+                            @if (friends != null)
+                            {
+                                foreach (var friend in friends)
+                                {
+                                    <!--<div class="mr-2">
+                        <img class="rounded-circle" width="30" src="https://picsum.photos/50/50" alt="" style="float:left ;margin-right:10px">
+                    </div>
+                    <div class="ml-2" style="margin-left:2px">
+                        <div class="h5 m-0"><a href="/Home/Profile/id?@friend.Id">@@ @friend.UserName</a></div>
+
+                    </div>
+                    <br />-->
+                                    <tr>
+                                        <td>
+                                            <div class="chip">
+                                                <a href="~/profile/index/?id=@friend.Id"><img src="/Home/File/?id=@friend.DpId" alt="Person" width="96" height="96">
+                                                <p>@@@friend.UserName</p>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            }
+                            <!--   <tr>
+                <td>
+                    <div class="chip">
+                        <img src="~/Content/src/p2.jpg" alt="Person" width="96" height="96">
+                        Radadiya krinish
+
+                    </div>
+                </td>
+            <tr>
+                <td>
+                    <div class="chip">
+                        <img src="~/Content/src/p1.jpg" alt="Person" width="96" height="96">
+                        John Doe
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="chip">
+                        <img src="~/Content/src/p1.jpg" alt="Person" width="96" height="96">
+                        akshay
+
+                    </div>
+                </td>
+            </tr>-->
 
 
 
+                        </tbody>
+                    </table>
 
                     <a href="#" class="card-link">Card link</a>
                     <a href="#" class="card-link">Another link</a>
                 </div>
             </div>
-            <div class="card gedf-card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">
-                        Some quick example text to build on the card title and make up the bulk of the
-                        card's content.
-                    </p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
+
+            
         </div>
     </div>
 </div>
@@ -383,7 +525,7 @@
     </script>
     <script src="~/Scripts/notify.js"></script>
     <script>
-        function comment(postid,user) {
+        function comment(postid, user) {
             debugger;
             var comment = $("#comment").val();
             var user = user;
@@ -420,6 +562,12 @@
                         alert("Whooaaa! Something went wrong..")
                     },
                 });
+        }
+    </script>
+    <!--like-->
+    <script>
+        function myFunction(x) {
+            x.classList.toggle("fa-thumbs-down");
         }
     </script>
 }
