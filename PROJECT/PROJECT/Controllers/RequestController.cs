@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 
 namespace PROJECT.Controllers
 {
+    [Authorize]
     public class RequestController : Controller
     {
         ApplicationDbContext ApplicationDb = new ApplicationDbContext();
@@ -46,6 +47,7 @@ namespace PROJECT.Controllers
         {
             ApplicationUser applicationUser = Session["User"] as ApplicationUser;
             List<ApplicationUser> users = ApplicationDb.Users.Where(u => u.UserName == UserName).ToList<ApplicationUser>();
+            
             ViewBag.Search = users;
             return View("Index");
         }
@@ -60,6 +62,10 @@ namespace PROJECT.Controllers
         public ActionResult Send(string UserId)
         {
             ApplicationUser applicationUser = Session["User"] as ApplicationUser;
+            if(applicationUser.Id == UserId)
+            {
+                return Json("Can not send Request", JsonRequestBehavior.AllowGet);
+            }
             Requests request = new Requests();
             var flag = ApplicationDb.Requests.Where(r => r.to_id == UserId && r.from_id == applicationUser.Id).Count();
             //JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
@@ -74,6 +80,7 @@ namespace PROJECT.Controllers
                 request.from_id = applicationUser.Id;
                 ApplicationDb.Requests.Add(request);
                 ApplicationDb.SaveChanges();
+                
                 return Json("Request Sent", JsonRequestBehavior.AllowGet);
             } 
         }
@@ -98,6 +105,12 @@ namespace PROJECT.Controllers
             Requests req = ApplicationDb.Requests.Where(r => r.from_id == UserId && r.to_id == applicationUser.Id).First<Requests>();
             req.Accepted = true;
             ApplicationDb.SaveChanges();
+            Notification notification = new Notification();
+            notification.notificationType = NotificationType.Request;
+            notification.Description=applicationUser.UserName + "Accepted Your Request";
+            ApplicationUser nofuser = ApplicationDb.Users.Where(u => u.Id == UserId).FirstOrDefault();
+            nofuser.Notifications.Add(notification);
+            ApplicationDb.SaveChanges();
             return Json(Url.Action("Show", "Request"));
         }
 
@@ -106,6 +119,12 @@ namespace PROJECT.Controllers
             ApplicationUser applicationUser = Session["User"] as ApplicationUser;
             Requests req = ApplicationDb.Requests.Where(r => r.from_id == UserId && r.to_id == applicationUser.Id).First<Requests>();
             ApplicationDb.Requests.Remove(req);
+            ApplicationDb.SaveChanges();
+            Notification notification = new Notification();
+            notification.notificationType = NotificationType.Request;
+            notification.Description = applicationUser.UserName + "Declined Your Request";
+            ApplicationUser nofuser = ApplicationDb.Users.Where(u => u.Id == UserId).FirstOrDefault();
+            nofuser.Notifications.Add(notification);
             ApplicationDb.SaveChanges();
             return Json(Url.Action("Show", "Request"));
         }

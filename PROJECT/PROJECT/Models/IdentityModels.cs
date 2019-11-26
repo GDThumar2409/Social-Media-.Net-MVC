@@ -10,10 +10,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PROJECT.Models
 {
-    //public enum PhotoType
-    //{
-        //Dp = 1, Post
-    //}
+    public enum NotificationType
+    {
+        Comment = 1, Like ,Request, Post
+    }
 
     public enum Gender
     {
@@ -60,10 +60,12 @@ namespace PROJECT.Models
         public bool IsFriends { get; set; }
         public bool IsPublic { get; set; }
         public DateTime dateTime { get; set; }
+        //public int Like { get; set; }
 
 
         //[ForeignKey("CommentId")]
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Like> Likes { get; set; }
         [ForeignKey("photoId")]
         public virtual Photo Photo { get; set; }
         [ForeignKey("UserId")]
@@ -82,6 +84,22 @@ namespace PROJECT.Models
 
         //[ForeignKey("PostId")]
         public virtual Post Post { get; set; }
+    }
+
+    public class Notification
+    {
+        public int NotificationId { get; set; }
+        public NotificationType notificationType { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class Like
+    {
+        public int LikeId { get; set; }
+        public string UserId { get; set; } 
+
+        [ForeignKey("UserId")]
+        public ApplicationUser user { get; set; }
     }
 
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
@@ -105,6 +123,7 @@ namespace PROJECT.Models
         public virtual Photo Dp { get; set; }
         //[ForeignKey("PostId")]
         //public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -126,6 +145,8 @@ namespace PROJECT.Models
         public DbSet<Requests> Requests { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Like> Likes { get; set; }
 
         public static ApplicationDbContext Create()
         {

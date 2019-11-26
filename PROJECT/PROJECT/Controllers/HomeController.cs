@@ -8,7 +8,7 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    
+    [Authorize]
     public class HomeController : Controller
     {
         public ApplicationDbContext applicationDb=new ApplicationDbContext();
@@ -20,14 +20,26 @@ namespace PROJECT.Controllers
             List<ApplicationUser> friends= new List<ApplicationUser>();
             ApplicationUser user;
             int reqcount = applicationDb.Requests.Where(r => r.to_id == applicationUser.Id && r.Accepted == false).Count();
-            List<Requests> requests  = applicationDb.Requests.Where(r => r.to_id == applicationUser.Id && r.Accepted == true).ToList<Requests>();
+            int counts=applicationDb.Requests.Where(r => r.to_id == applicationUser.Id && r.Accepted == true).Count();
+            int following = applicationDb.Requests.Where(r => r.from_id == applicationUser.Id && r.Accepted == true).Count();
+            List<Requests> requests  = applicationDb.Requests.Where(r => r.from_id == applicationUser.Id && r.Accepted == true).ToList<Requests>();
             foreach(Requests req in requests)
             {
-                user = applicationDb.Users.Where(u => u.Id == req.from_id).First<ApplicationUser>();
+                user = applicationDb.Users.Where(u => u.Id == req.to_id).First<ApplicationUser>();
                 friends.Add(user);
             }
             ViewBag.Friends = friends;
             ViewBag.reqcount = reqcount;
+            ViewBag.counts = counts;
+            ViewBag.followings = following;
+            if (applicationUser.Notifications == null)
+            {
+                ViewBag.nofcount = 0;
+            }
+            else
+            {
+                ViewBag.nofcount = applicationUser.Notifications.Count;
+            }
             List<Post> allposts = applicationDb.Posts.ToList<Post>();
             //List<Post> userpost = new List<Post>();
             //foreach(var post in allposts)
@@ -38,18 +50,31 @@ namespace PROJECT.Controllers
             //}
 
             //}
-           // var pts=from p in applicationDb.Posts
-             //       from  f in friends
-               //     where p.UserId == f.Id
-                 //   orderby p.dateTime descending
-                   // select p;
+            // var pts=from p in applicationDb.Posts
+            //       from  f in friends
+            //     where p.UserId == f.Id
+            //   orderby p.dateTime descending
+            // select p;
 
-            var posts = from p in allposts
-                        from f in friends
-                        where p.UserId == f.Id
-                        orderby p.dateTime descending
-                        select p;
-            ViewBag.posts = posts;
+            if (friends.Count == 0)
+            {
+                var posts = from p in allposts
+                            where p.UserId == applicationUser.Id
+                            orderby p.dateTime descending
+                            select p;
+                ViewBag.posts = posts;
+            }
+            else
+            {
+                
+                var posts = (from p in allposts
+                            from f in friends
+                            where p.UserId == f.Id || p.UserId == applicationUser.Id
+                            orderby p.dateTime descending
+                            select p).Distinct().ToList();
+                
+                ViewBag.posts = posts;
+            }
             return View();
         }
 
@@ -69,7 +94,7 @@ namespace PROJECT.Controllers
             cmt.Post = applicationDb.Posts.Where(p => p.PostId == postid).First<Post>();
             cmt.UserId = applicationUser.Id;
             applicationDb.SaveChanges();
-            
+            var post= applicationDb.Posts.Where(p => p.PostId == postid).First<Post>();
             //applicationDb.SaveChanges();
             // post.Comments.Add(cmt);
             //applicationDb2.SaveChanges();
@@ -108,6 +133,7 @@ namespace PROJECT.Controllers
                     post.dateTime = DateTime.Now;
                     //applicationDb.Photos.Add(avatar);
                     post.UserId = applicationUser.Id;
+                    
                     //applicationUser.Posts.Add(post);
                     applicationDb.Posts.Add(post);
                     
@@ -144,6 +170,47 @@ namespace PROJECT.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        public ActionResult Like(int postid)
+        {
+            ApplicationUser user= Session["User"] as ApplicationUser;
+            Like like = new Like();
+            like.user = applicationDb.Users.Where( u => u.Id==user.Id).FirstOrDefault<ApplicationUser>();
+            
+            try
+            {
+                Post post = applicationDb.Posts.Where(p => p.PostId == postid).FirstOrDefault();
+                post.Likes.Add(like);
+                applicationDb.SaveChanges();
+                applicationDb.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }
+            
+            return Json("success", JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult DisLike(int postid)
+        {
+            Post post = applicationDb.Posts.Where(p => p.PostId == postid).FirstOrDefault();
+            List<Like> likes = post.Likes.ToList();
+            ApplicationUser usertemp = Session["User"] as ApplicationUser;
+            ApplicationUser user = applicationDb.Users.Where(u => u.Id == usertemp.Id).FirstOrDefault<ApplicationUser>();
+            Like like = likes.Where(l => l.user == user).FirstOrDefault();
+            //post.Likes.Remove(like);
+            applicationDb.Posts.Where(p => p.PostId == postid).FirstOrDefault().Likes.Remove(like);
+
+            applicationDb.Likes.Remove(like);
+            //likes.Remove(like);
+            applicationDb.SaveChanges();
+            return Json("success", JsonRequestBehavior.AllowGet);
         }
     }
 }

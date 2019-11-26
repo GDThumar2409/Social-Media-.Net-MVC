@@ -1,0 +1,178 @@
+﻿@using PROJECT.Models
+
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+                var notifications = ViewBag.Notificatons;
+}
+@section style{
+    <style>
+        .chip {
+            display: inline-block;
+            padding: 0 25px;
+            height: 50px;
+            font-size: 14px;
+            line-height: 50px;
+            border-radius: 25px;
+            background-color: #f1f1f1;
+            width: 450px;
+        }
+
+            .chip img {
+                float: left;
+                margin: 0 10px 0 -25px;
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+            }
+
+            .chip i {
+                margin-top: 16px;
+                float: right
+            }
+
+        .scroll {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+}
+
+<div class="container-fluid">
+    <div class="shadow p-2 mb-4 bg-white" style="text-align:center"> <h2> Notification Time-Line</h2></div>
+    @foreach (var notification in notifications)
+    {
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="card gedf-card shadow p-2 mb-4 bg-white" style="padding-bottom:20px">
+                    <div class="card-body  scroll">
+                        <h5 class="card-title position-static shadow-sm p-2 mb-4 bg-white" style="text-align:center">Requests Notification</h5>
+                        <hr>
+                        <h6 class="card-subtitle mb-2 text-muted"></h6>
+                        <div class="chip" style="margin:5px">
+                            <a>
+                                <a href="" style="color:black"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <img src="~/Content/src/chat.png" alt="Person" width="96" height="96">
+                                <p>@@parth Sent You Request</p>
+
+                            </a>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+                <div class="card gedf-card shadow p-2 mb-4 bg-white" style="padding-bottom:20px">
+                    <div class="card-body  scroll">
+                        <h5 class="card-title position-static shadow-sm p-2 mb-4 bg-white" style="text-align:center">Post Notification</h5>
+                        <hr>
+                        <h6 class="card-subtitle mb-2 text-muted"></h6>
+                        <div class="chip" style="margin:5px">
+                            <a>
+                                <a href="" style="color:black"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <img src="~/Content/src/chat.png" alt="Person" width="96" height="96">
+                                <p>@@parth Upload  New  Post On 15/11/2019</p>
+
+                            </a>
+                        </div>
+                        <div class="chip" style="margin:5px">
+                            <a>
+                                <a href="" style="color:black"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <img src="~/Content/src/chat.png" alt="Person" width="96" height="96">
+                                <p>@@parth Upload  New  Post On 15/11/2019</p>
+
+                            </a>
+                        </div>
+                        <div class="chip" style="margin:5px">
+                            <a>
+                                <a href="" style="color:black"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <img src="~/Content/src/chat.png" alt="Person" width="96" height="96">
+                                <p>@@parth Upload  New  Post On 15/11/2019</p>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="card gedf-card shadow p-2 mb-4 bg-white" style="padding-bottom:20px">
+                <div class="card-body  scroll">
+                    <h5 class="card-title position-static shadow-sm p-2 mb-4 bg-white" style="text-align:center">Requests Notification</h5>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <div class="chip" style="margin:5px">
+                        <a>
+                            <a href="" style="color:black"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <img src="~/Content/src/chat.png" alt="Person" width="96" height="96">
+                            <p>@@parth Sent You Request</p>
+
+                        </a>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+            <div class="card gedf-card shadow p-2 mb-4 bg-white" style="padding-bottom:20px">
+                <div class="card-body  scroll">
+                    <h5 class="card-title position-static shadow-sm p-2 mb-4 bg-white" style="text-align:center">Post Notification</h5>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <div class="chip" style="margin:5px">
+                        <a>
+                            <a href="" style="color:black"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <img src="~/Content/src/chat.png" alt="Person" width="96" height="96">
+                            <p>@@parth Upload  New  Post On 15/11/2019</p>
+
+                        </a>
+                    </div>
+                    <div class="chip" style="margin:5px">
+                        <a>
+                            <a href="" style="color:black"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <img src="~/Content/src/chat.png" alt="Person" width="96" height="96">
+                            <p>@@parth Upload  New  Post On 15/11/2019</p>
+
+                        </a>
+                    </div>
+                    <div class="chip" style="margin:5px">
+                        <a>
+                            <a href="" style="color:black"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <img src="~/Content/src/chat.png" alt="Person" width="96" height="96">
+                            <p>@@parth Upload  New  Post On 15/11/2019</p>
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6 ">
+            <div class="card gedf-card shadow p-2 mb-4 bg-white" " style="padding-bottom:20px;height:460px">
+                <div class="card-body  scroll">
+                    <h5 class="card-title position-static shadow-sm p-2 mb-4 bg-white" style="text-align:center">Like & Comments</h5>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+

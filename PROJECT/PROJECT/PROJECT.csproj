@@ -186,6 +186,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NavController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -234,6 +237,38 @@
     <Compile Include="Migrations\201911111040117_POST_COMMENT_3.Designer.cs">
       <DependentUpon>201911111040117_POST_COMMENT_3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911150359097_Request_Del.cs" />
+    <Compile Include="Migrations\201911150359097_Request_Del.Designer.cs">
+      <DependentUpon>201911150359097_Request_Del.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911161656285_LIKE_POST.cs" />
+    <Compile Include="Migrations\201911161656285_LIKE_POST.Designer.cs">
+      <DependentUpon>201911161656285_LIKE_POST.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911200609256_Notification.cs" />
+    <Compile Include="Migrations\201911200609256_Notification.Designer.cs">
+      <DependentUpon>201911200609256_Notification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911200616369_Notification2.cs" />
+    <Compile Include="Migrations\201911200616369_Notification2.Designer.cs">
+      <DependentUpon>201911200616369_Notification2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911231630166_Comment_2.cs" />
+    <Compile Include="Migrations\201911231630166_Comment_2.Designer.cs">
+      <DependentUpon>201911231630166_Comment_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911231640287_Like.cs" />
+    <Compile Include="Migrations\201911231640287_Like.Designer.cs">
+      <DependentUpon>201911231640287_Like.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911231647388_Like_2.cs" />
+    <Compile Include="Migrations\201911231647388_Like_2.Designer.cs">
+      <DependentUpon>201911231647388_Like_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911260845496_like_error.cs" />
+    <Compile Include="Migrations\201911260845496_like_error.Designer.cs">
+      <DependentUpon>201911260845496_like_error.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -257,6 +292,9 @@
     <Content Include="Content\fontawesome\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\jquery.ui.chatbox.css" />
+    <Content Include="Content\src\chat.png" />
+    <Content Include="Content\src\img.png" />
+    <Content Include="Content\src\web_heart_animation.png" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -334,6 +372,9 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <None Include="Properties\PublishProfiles\ProjectMuRMuR - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ProjectMuRMuR - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ProjectMuRMuR - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -350,6 +391,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\notify.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -406,6 +448,12 @@
     <Content Include="Views\Shared\_Chat.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\Request\Show.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Nav\Aboutus.cshtml" />
+    <Content Include="Views\Nav\Privacy.cshtml" />
+    <Content Include="Views\Nav\Jobs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911051000371_Intial.resx">
@@ -440,6 +488,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911111040117_POST_COMMENT_3.resx">
       <DependentUpon>201911111040117_POST_COMMENT_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911150359097_Request_Del.resx">
+      <DependentUpon>201911150359097_Request_Del.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911161656285_LIKE_POST.resx">
+      <DependentUpon>201911161656285_LIKE_POST.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911200609256_Notification.resx">
+      <DependentUpon>201911200609256_Notification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911200616369_Notification2.resx">
+      <DependentUpon>201911200616369_Notification2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911231630166_Comment_2.resx">
+      <DependentUpon>201911231630166_Comment_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911231640287_Like.resx">
+      <DependentUpon>201911231640287_Like.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911231647388_Like_2.resx">
+      <DependentUpon>201911231647388_Like_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911260845496_like_error.resx">
+      <DependentUpon>201911260845496_like_error.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

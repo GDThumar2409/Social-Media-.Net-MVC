@@ -64,6 +64,10 @@ namespace PROJECT.Controllers
         {
             //var user = ApplicationDb.Users.Where(u => u.UserName == "gunjan").First();
             //user.Posts = null;
+            if (Session["User"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -82,7 +86,7 @@ namespace PROJECT.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -93,11 +97,12 @@ namespace PROJECT.Controllers
                     onlineUsers.Add(model.UserName);
                     Console.WriteLine(onlineUsers);
                     Session["User"]= ApplicationDb.Users.FirstOrDefault(x => x.UserName == model.UserName);
+                    Session.Timeout = 45;
                     return RedirectToAction("Index", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -227,6 +232,7 @@ namespace PROJECT.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         Session["User"] = user;
+                        Session.Timeout = 45;
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

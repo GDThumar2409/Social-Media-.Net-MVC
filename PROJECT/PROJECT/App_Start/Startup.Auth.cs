@@ -58,11 +58,11 @@ namespace PROJECT
             //   appId: "",
             //   appSecret: "");
 
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = "77591918765-k5e4dhe2vhi93h96nf3rpk29ptt7k14j.apps.googleusercontent.com",
-                ClientSecret = "7cZkdbMfTi1tHj3QQuc6OLbc"
-            });
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+              //  ClientId = "77591918765-k5e4dhe2vhi93h96nf3rpk29ptt7k14j.apps.googleusercontent.com",
+               // ClientSecret = "7cZkdbMfTi1tHj3QQuc6OLbc"
+            //});
         }
     }
 }

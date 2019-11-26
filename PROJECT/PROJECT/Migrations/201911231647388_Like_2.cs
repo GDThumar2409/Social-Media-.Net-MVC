@@ -1,0 +1,18 @@
+namespace PROJECT.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class Like_2 : DbMigration
+    {
+        public override void Up()
+        {
+            DropColumn("dbo.Posts", "Like");
+        }
+        
+        public override void Down()
+        {
+            AddColumn("dbo.Posts", "Like", c => c.Int(nullable: false));
+        }
+    }
+}
